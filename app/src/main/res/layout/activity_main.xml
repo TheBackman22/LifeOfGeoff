@@ -31,28 +31,29 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/buildYourOwn"
                 android:layout_width="300dp"
                 android:layout_height="75dp"
-                android:layout_marginTop="90dp"
                 android:text="Build Your Own World"
                 android:textSize="20dp"
-                app:layout_constraintBottom_toTopOf="@+id/button3"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="300dp"
-                android:layout_height="75dp"
-                android:layout_marginTop="228dp"
-                android:text="Live Life with Geoff"
-                android:textSize="20dp"
+                app:layout_constraintBottom_toTopOf="@id/lifeWithGeoff"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.504"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.652" />
+
+            <Button
+                android:id="@+id/lifeWithGeoff"
+                android:layout_width="300dp"
+                android:layout_height="75dp"
+                android:layout_marginBottom="384dp"
+                android:text="Live Life with Geoff"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.504"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
