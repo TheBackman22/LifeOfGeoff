@@ -77,7 +77,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="100dp" />
+        android:layout_height="80dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -108,5 +108,15 @@
             android:contentDescription="image"
             tools:srcCompat="@tools:sample/avatars[3]" />
     </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="35dp" />
+
+    <Button
+        android:id="@+id/toCamera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Live" />
 
 </LinearLayout>
