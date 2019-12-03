@@ -24,27 +24,27 @@ public class SettingsActivity extends AppCompatActivity {
         Button toCameraScreen = findViewById(R.id.toCamera);
         singular.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                System.out.println("Switch state = " + isChecked);
+                System.out.println("singular state = " + isChecked);
             }
         });
         capturable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                System.out.println("Switch state = " + isChecked);
+                System.out.println("capture state = " + isChecked);
             }
         });
         recordable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                System.out.println("Switch state = " + isChecked);
+                System.out.println("record state = " + isChecked);
             }
         });
         faceCounterActive.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                System.out.println("Switch state = " + isChecked);
+                System.out.println("count state = " + isChecked);
             }
         });
         lifeWithJoff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                System.out.println("Switch state = " + isChecked);
+                System.out.println("geoff state = " + isChecked);
             }
         });
         View.OnClickListener upload = new View.OnClickListener() {
