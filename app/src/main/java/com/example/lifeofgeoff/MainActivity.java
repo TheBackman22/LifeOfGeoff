@@ -19,6 +19,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 System.out.println("life with geoff selected");
+                Intent camera = new Intent(view.getContext(), CameraActivity.class);
+                startActivity(camera);
+                finish();
             }
         };
         Button lifeWG = findViewById(R.id.lifeWithGeoff);
@@ -33,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(settings);
             }
         };
-        Button build = findViewById(R.id.lifeWithGeoff);
+        Button build = findViewById(R.id.buildYourOwn);
         build.setOnClickListener(byow);
     }
 }
