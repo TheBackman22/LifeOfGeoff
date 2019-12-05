@@ -17,9 +17,11 @@ import android.hardware.camera2.CameraManager;
 import android.hardware.camera2.CaptureRequest;
 import android.hardware.camera2.params.StreamConfigurationMap;
 import android.media.ImageReader;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.util.DisplayMetrics;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.Surface;
@@ -99,26 +101,39 @@ public class CameraActivity extends AppCompatActivity {
         setContentView(R.layout.activity_camera);
         System.out.println("We in da camera");
 
-        ImageButton flip = findViewById(R.id.flipButton);
-        View.OnClickListener toCamClick = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-               System.out.println(" ------ ");
-            }
-        };
-        flip.setOnClickListener(toCamClick);
+//        ImageButton flip = findViewById(R.id.flipButton);
+//        View.OnClickListener toCamClick = new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//               System.out.println(" ------ ");
+//            }
+//        };
+//        flip.setOnClickListener(toCamClick);
 
         textureView = (TextureView)findViewById(R.id.textureView);
         //From Java 1.4 , you can use keyword 'assert' to check expression true or false
         assert textureView != null;
         textureView.setSurfaceTextureListener(textureListener);
     }
+    private int getSoftbuttonsbarHeight() {
+        // getRealMetrics is only available with API 17 and +
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            return 0;
+        }
 
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int usableHeight = metrics.heightPixels;
+        getWindowManager().getDefaultDisplay().getRealMetrics(metrics);
+        int realHeight = metrics.heightPixels;
+
+        return realHeight > usableHeight ? realHeight - usableHeight : 0;
+    }
     private void createCameraPreview() {
         try{
             SurfaceTexture texture = textureView.getSurfaceTexture();
             assert  texture != null;
-            texture.setDefaultBufferSize(imageDimension.getWidth(),imageDimension.getHeight());
+            texture.setDefaultBufferSize(imageDimension.getWidth(),imageDimension.getHeight() - getSoftbuttonsbarHeight());
             Surface surface = new Surface(texture);
             captureRequestBuilder = cameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
             captureRequestBuilder.addTarget(surface);
