@@ -7,6 +7,11 @@
     android:layout_height="match_parent"
     android:keepScreenOn="true">
 
+    <TextureView
+        android:id="@+id/textureView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <ImageButton
         android:id="@+id/flipButton"
         android:layout_width="match_parent"

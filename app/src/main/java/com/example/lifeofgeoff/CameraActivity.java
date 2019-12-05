@@ -103,18 +103,15 @@ public class CameraActivity extends AppCompatActivity {
         View.OnClickListener toCamClick = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(int i = 0; i < 10; i++) {
-                    String s = "";
-                    for(int j = 0; j < 10; j++) {
-                        s += ("\\|/" + "\t");
-                    }
-                    s += i;
-                    System.out.println(s);
-                    Camera.getNumberOfCameras();
-                }
+               System.out.println(" ------ ");
             }
         };
         flip.setOnClickListener(toCamClick);
+
+        textureView = (TextureView)findViewById(R.id.textureView);
+        //From Java 1.4 , you can use keyword 'assert' to check expression true or false
+        assert textureView != null;
+        textureView.setSurfaceTextureListener(textureListener);
     }
 
     private void createCameraPreview() {
