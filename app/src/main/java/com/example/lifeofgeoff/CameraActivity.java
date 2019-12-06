@@ -31,7 +31,13 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.google.android.gms.vision.CameraSource;
+
+import com.google.android.gms.vision.Detector;
+import com.google.android.gms.vision.MultiProcessor;
+import com.google.android.gms.vision.Tracker;
+import com.google.android.gms.vision.face.Face;
+import com.google.android.gms.vision.face.FaceDetector;
+import com.google.android.gms.vision.face.LargestFaceFocusingProcessor;
 
 import java.util.Arrays;
 
@@ -51,12 +57,16 @@ public class CameraActivity extends AppCompatActivity {
         ORIENTATIONS.append(Surface.ROTATION_270,180);
     }
 
+
     private String cameraId;
     private CameraDevice cameraDevice;
     private CameraCaptureSession cameraCaptureSessions;
     private CaptureRequest.Builder captureRequestBuilder;
     private Size imageDimension;
     private ImageReader imageReader;
+
+    //Settings Camera Options
+    private boolean multipleFaces;
 
 //    //Save to FILE
 //    private File file;
@@ -93,6 +103,11 @@ public class CameraActivity extends AppCompatActivity {
             // no camera on this device
             return false;
         }
+    }
+
+    private void setUpSettings(Bundle bundle) {
+        // Fast_Mode vs ACCURATE_MODE
+        //Set value of multipleFaces appropriately
     }
 
     @Override
@@ -190,6 +205,31 @@ public class CameraActivity extends AppCompatActivity {
         } catch (CameraAccessException e) {
             e.printStackTrace();
         }
+    }
+    @NonNull
+    private FaceDetector createFaceDetector(final Context context) {
+        System.out.println("Tryna find faces");
+
+        FaceDetector detector = new FaceDetector.Builder(context)
+                .setLandmarkType(FaceDetector.ALL_LANDMARKS)
+                .setClassificationType(FaceDetector.ALL_CLASSIFICATIONS)
+                .setTrackingEnabled(true)
+                .setMode(FaceDetector.FAST_MODE)
+                //.setMinFaceSize(mIsFrontFacing ? 0.35f : 0.15f)
+                .build();
+
+        MultiProcessor.Factory<Face> factory = new MultiProcessor.Factory<Face>() {
+            @Override
+            public Tracker<Face> create(Face face) {
+                return new FaceTracker(context);
+            }
+        };
+        detector.setProcessor(
+                new LargestFaceFocusingProcessor(
+                        detector,
+                        new FaceTracker(context)));
+        //Add code for checking if detector is operational
+        return detector;
     }
 
     TextureView.SurfaceTextureListener textureListener = new TextureView.SurfaceTextureListener() {

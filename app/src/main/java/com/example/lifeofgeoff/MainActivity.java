@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 System.out.println("life with geoff selected");
                 Intent camera = new Intent(view.getContext(), CameraActivity.class);
+                camera.putExtra("countFaces", true);
                 startActivity(camera);
             }
         };

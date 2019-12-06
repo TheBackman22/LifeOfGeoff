@@ -10,6 +10,11 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 
 public class SettingsActivity extends AppCompatActivity {
+    private boolean singleFace = true;
+    private boolean canCapture = true;
+    private boolean canRecord = true;
+    private boolean countPeople = true;
+    private boolean detectEmotion = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
