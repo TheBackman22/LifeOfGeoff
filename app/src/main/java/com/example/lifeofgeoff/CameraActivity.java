@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.SurfaceTexture;
 import android.hardware.Camera;
@@ -43,13 +44,6 @@ public class CameraActivity extends AppCompatActivity {
     private TextureView textureView;
 
     //Check state orientation of output image
-    private static final SparseIntArray ORIENTATIONS = new SparseIntArray();
-    static{
-        ORIENTATIONS.append(Surface.ROTATION_0,90);
-        ORIENTATIONS.append(Surface.ROTATION_90,0);
-        ORIENTATIONS.append(Surface.ROTATION_180,270);
-        ORIENTATIONS.append(Surface.ROTATION_270,180);
-    }
 
     private String cameraId;
     private CameraDevice cameraDevice;
@@ -100,7 +94,9 @@ public class CameraActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
         System.out.println("We in da camera");
-
+        Intent me = getIntent();
+        boolean b = me.getBooleanExtra("singlePerson", false);
+        System.out.println("singlePerson: " + b);
 //        ImageButton flip = findViewById(R.id.flipButton);
 //        View.OnClickListener toCamClick = new View.OnClickListener() {
 //            @Override

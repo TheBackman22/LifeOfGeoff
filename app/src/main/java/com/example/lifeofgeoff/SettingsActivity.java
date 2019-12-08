@@ -22,8 +22,10 @@ public class SettingsActivity extends AppCompatActivity {
         Switch lifeWithJoff = findViewById(R.id.switch5);
         Button uploadButton = findViewById(R.id.button2);
         Button toCameraScreen = findViewById(R.id.toCamera);
+        final Intent i = new Intent(this, CameraActivity.class);
         singular.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                i.putExtra("singlePerson", isChecked);
                 System.out.println("singular state = " + isChecked);
             }
         });
@@ -58,7 +60,6 @@ public class SettingsActivity extends AppCompatActivity {
         View.OnClickListener toCamClick = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(view.getContext(), CameraActivity.class);
                 startActivity(i);
             }
         };
