@@ -268,7 +268,7 @@ public class GeoffActivity extends AppCompatActivity {
 
         GraphicFaceTracker(GraphicOverlay overlay) {
             mOverlay = overlay;
-            mFaceGraphic = new DrawPicture(overlay);
+            mFaceGraphic = new DrawPicture(overlay, getApplicationContext());
         }
 
         /**
