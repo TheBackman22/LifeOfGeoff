@@ -73,25 +73,26 @@ class DrawPicture extends GraphicOverlay.Graphic {
             return;
         }
 
-       /*  //Face position and dimensions
-        PointF position = new PointF(translateX(face.getPosition().x),
-                translateY(face.getPosition().y));
-        float width = scaleX(face.getWidth());
-        float height = scaleY(face.getHeight());
-        */
+         //Face position and dimensions
+//        PointF position = new PointF(translateX(face.getPosition().x),
+//                translateY(face.getPosition().y));
+//        float width = scaleX(face.getWidth());
+//        float height = scaleY(face.getHeight());
+
 
         // Draws a circle at the position of the detected face, with the face's track id below.
         float x = translateX(face.getPosition().x + face.getWidth() / 2);
         float y = translateY(face.getPosition().y + face.getHeight() / 2);
 
         // Draws a Geoff.
-        float xOffset = scaleX(face.getWidth() / 2.0f);
-        float yOffset = scaleY(face.getHeight() / 2.0f);
+        float xOffset = scaleX(face.getWidth() / 1.9f);
+        float yOffset = scaleY(face.getHeight() / 1.9f);
         float left = x - xOffset;
         float top = y - yOffset;
         float right = x + xOffset;
         float bottom = y + yOffset;
         geoff.setBounds((int) left, (int) top, (int) right, (int) bottom);
+        System.out.println("Dimensions: " + geoff.getBounds().toString());
         geoff.draw(canvas);
 
     }

@@ -124,13 +124,18 @@ public class GeoffActivity extends AppCompatActivity {
         }
 
         DisplayMetrics metrics = new DisplayMetrics();
+//        ((Activity) getApplicationContext()).getWindowManager()
+//                .getDefaultDisplay()
+//                .getMetrics(metrics);
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int usableHeight = metrics.heightPixels;
         int usableWidth = metrics.widthPixels;
+
         mCameraSource = new CameraSource.Builder(context, detector)
-                .setRequestedPreviewSize(usableHeight, usableWidth)
+                .setRequestedPreviewSize(1960, 1080)
                 .setFacing(CameraSource.CAMERA_FACING_BACK)
                 .setRequestedFps(60.0f)
+                .setAutoFocusEnabled(true)
                 .build();
     }
 

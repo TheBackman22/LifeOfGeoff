@@ -15,9 +15,11 @@ package com.example.lifeofgeoff.ui.camera;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -88,13 +90,7 @@ public class CameraSourcePreview extends ViewGroup {
                 Size size = mCameraSource.getPreviewSize();
                 int min = Math.min(size.getWidth(), size.getHeight());
                 int max = Math.max(size.getWidth(), size.getHeight());
-                if (isPortraitMode()) {
-                    // Swap width and height sizes when in portrait, since it will be rotated by
-                    // 90 degrees
-                    mOverlay.setCameraInfo(min, max, mCameraSource.getCameraFacing());
-                } else {
-                    mOverlay.setCameraInfo(max, min, mCameraSource.getCameraFacing());
-                }
+                mOverlay.setCameraInfo(min, max, mCameraSource.getCameraFacing());
                 mOverlay.clear();
             }
             mStartRequested = false;
@@ -124,8 +120,11 @@ public class CameraSourcePreview extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        int width = 320;
-        int height = 240;
+
+        int width = 1080;
+        int height = 1960;
+        DisplayMetrics metrics = new DisplayMetrics();
+
         if (mCameraSource != null) {
             Size size = mCameraSource.getPreviewSize();
             if (size != null) {
@@ -135,11 +134,11 @@ public class CameraSourcePreview extends ViewGroup {
         }
 
         // Swap width and height sizes when in portrait, since it will be rotated 90 degrees
-        if (isPortraitMode()) {
-            int tmp = width;
-            width = height;
-            height = tmp;
-        }
+//        if (isPortraitMode()) {
+//            int tmp = width;
+//            width = height;
+//            height = tmp;
+//        }
 
         final int layoutWidth = right - left;
         final int layoutHeight = bottom - top;
@@ -165,16 +164,16 @@ public class CameraSourcePreview extends ViewGroup {
         }
     }
 
-    private boolean isPortraitMode() {
-        int orientation = mContext.getResources().getConfiguration().orientation;
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            return false;
-        }
-        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-            return true;
-        }
-
-        Log.d(TAG, "isPortraitMode returning false by default");
-        return false;
-    }
+//    private boolean isPortraitMode() {
+//        int orientation = mContext.getResources().getConfiguration().orientation;
+//        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+//            return false;
+//        }
+//        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+//            return true;
+//        }
+//
+//        Log.d(TAG, "isPortraitMode returning false by default");
+//        return false;
+//    }
 }
