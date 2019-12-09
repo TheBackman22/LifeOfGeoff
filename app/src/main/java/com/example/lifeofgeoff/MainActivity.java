@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 System.out.println("life with geoff selected");
-                Intent camera = new Intent(view.getContext(), CameraActivity.class);
+                Intent camera = new Intent(view.getContext(), GeoffActivity.class);
                 camera.putExtra("countFaces", true);
                 startActivity(camera);
             }

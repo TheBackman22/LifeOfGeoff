@@ -19,7 +19,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_geoff);
         Switch singular = findViewById(R.id.switch1);
         Switch capturable = findViewById(R.id.switch2);
         Switch recordable = findViewById(R.id.switch3);
