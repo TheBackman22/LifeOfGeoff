@@ -90,7 +90,13 @@ public class CameraSourcePreview extends ViewGroup {
                 Size size = mCameraSource.getPreviewSize();
                 int min = Math.min(size.getWidth(), size.getHeight());
                 int max = Math.max(size.getWidth(), size.getHeight());
-                mOverlay.setCameraInfo(min, max, mCameraSource.getCameraFacing());
+                if (isPortraitMode()) {
+                    // Swap width and height sizes when in portrait, since it will be rotated by
+                    // 90 degrees
+                    mOverlay.setCameraInfo(min, max, mCameraSource.getCameraFacing());
+                } else {
+                    mOverlay.setCameraInfo(max, min, mCameraSource.getCameraFacing());
+                }
                 mOverlay.clear();
             }
             mStartRequested = false;
@@ -121,8 +127,8 @@ public class CameraSourcePreview extends ViewGroup {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
 
-        int width = 1080;
-        int height = 1960;
+        int width = 1960;
+        int height = 1080;
         DisplayMetrics metrics = new DisplayMetrics();
 
         if (mCameraSource != null) {
@@ -134,11 +140,11 @@ public class CameraSourcePreview extends ViewGroup {
         }
 
         // Swap width and height sizes when in portrait, since it will be rotated 90 degrees
-//        if (isPortraitMode()) {
-//            int tmp = width;
-//            width = height;
-//            height = tmp;
-//        }
+        if (isPortraitMode()) {
+            int tmp = width;
+            width = height;
+            height = tmp;
+        }
 
         final int layoutWidth = right - left;
         final int layoutHeight = bottom - top;
@@ -164,16 +170,16 @@ public class CameraSourcePreview extends ViewGroup {
         }
     }
 
-//    private boolean isPortraitMode() {
-//        int orientation = mContext.getResources().getConfiguration().orientation;
-//        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
-//            return false;
-//        }
-//        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
-//            return true;
-//        }
-//
-//        Log.d(TAG, "isPortraitMode returning false by default");
-//        return false;
-//    }
+    private boolean isPortraitMode() {
+        int orientation = mContext.getResources().getConfiguration().orientation;
+        if (orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            return false;
+        }
+        if (orientation == Configuration.ORIENTATION_PORTRAIT) {
+            return true;
+        }
+
+        Log.d(TAG, "isPortraitMode returning false by default");
+        return false;
+    }
 }

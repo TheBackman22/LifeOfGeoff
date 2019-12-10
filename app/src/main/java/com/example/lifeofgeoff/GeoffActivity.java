@@ -2,7 +2,9 @@ package com.example.lifeofgeoff;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.Manifest;
 import android.app.Activity;
@@ -17,6 +19,7 @@ import android.util.Size;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.lifeofgeoff.ui.camera.CameraSourcePreview;
 import com.example.lifeofgeoff.ui.camera.GraphicOverlay;
@@ -29,6 +32,7 @@ import com.google.android.gms.vision.face.Face;
 import com.google.android.gms.vision.face.FaceDetector;
 
 
+import java.io.File;
 import java.io.IOException;
 
 
@@ -40,13 +44,14 @@ public class GeoffActivity extends AppCompatActivity {
 
     private CameraSourcePreview mPreview;
     private GraphicOverlay mGraphicOverlay;
-    private Size imageDimension;
     private static final int RC_HANDLE_GMS = 9001;
     // permission request codes need to be < 256
     private static final int RC_HANDLE_CAMERA_PERM = 2;
     private int geoffCount;
     private TextView geoffCountText;
     private boolean mIsFrontFacing;
+    private Button b;
+    private Button flipButton;
 
     //==============================================================================================
     // Activity Methods
@@ -74,19 +79,11 @@ public class GeoffActivity extends AppCompatActivity {
         geoffCountText = findViewById(R.id.geoffCount);
         geoffCount = 0;
         geoffCountText.setText("No Geoffs Here");
-        View.OnClickListener take = new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                System.out.println("Took a pic");
-                mCameraSource.takePicture(null, null);
-            }
-        };
-        Button b = findViewById(R.id.picButton);
-        b.setOnClickListener(take);
+
         View.OnClickListener flip = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("Took a pic");
+                System.out.println("flipy flop");
                 mIsFrontFacing = !mIsFrontFacing;
 
                 if (mCameraSource != null) {
@@ -97,12 +94,58 @@ public class GeoffActivity extends AppCompatActivity {
                 startCameraSource();
             }
         };
-        Button flipButton = findViewById(R.id.flipButton);
+        flipButton = findViewById(R.id.flipButton);
         flipButton.setOnClickListener(flip);
 
-
-
+        b = findViewById(R.id.picButton);
+        View.OnClickListener take = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("Took a pic");
+//                mCameraSource.takePicture(null, null);
+                b.setVisibility(View.GONE);
+                flipButton.setVisibility(View.GONE);
+                shareScreen();
+            }
+        };
+        b.setOnClickListener(take);
     }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        shareScreen();
+    }
+
+    private void shareScreen() {
+
+        try {
+
+            File cacheDir = new File(
+                    android.os.Environment.getDataDirectory(),
+                    "/DCIM/lifeOfGeoff");
+
+            if (!cacheDir.exists()) {
+                cacheDir.mkdirs();
+            }
+
+            String path = new File(
+                    android.os.Environment.getDataDirectory(),
+                    "/DCIM/lifeOfGeoff") + "/screenshot.jpg";
+
+            Utils.savePic(Utils.takeScreenShot(this), path);
+
+            Toast.makeText(getApplicationContext(), "Screenshot Saved", Toast.LENGTH_SHORT).show();
+
+
+        } catch (NullPointerException ignored) {
+            ignored.printStackTrace();
+        }
+//        b.setVisibility(View.VISIBLE);
+        flipButton.setVisibility(View.VISIBLE);
+    }
+
     /**
      * Handles the requesting of the camera permission.  This includes
      * showing a "Snackbar" message of why the permission is needed then
@@ -116,6 +159,7 @@ public class GeoffActivity extends AppCompatActivity {
         if (!ActivityCompat.shouldShowRequestPermissionRationale(this,
                 Manifest.permission.CAMERA)) {
             ActivityCompat.requestPermissions(this, permissions, RC_HANDLE_CAMERA_PERM);
+
             return;
         }
 
@@ -140,6 +184,7 @@ public class GeoffActivity extends AppCompatActivity {
 
         Context context = getApplicationContext();
         FaceDetector detector = new FaceDetector.Builder(context)
+                .setMode(FaceDetector.ACCURATE_MODE)
                 .setClassificationType(FaceDetector.ALL_CLASSIFICATIONS)
                 .build();
 
@@ -159,10 +204,10 @@ public class GeoffActivity extends AppCompatActivity {
             Log.w(TAG, "Face detector dependencies are not yet available.");
         }
 
-        DisplayMetrics metrics = new DisplayMetrics();
 //        ((Activity) getApplicationContext()).getWindowManager()
 //                .getDefaultDisplay()
 //                .getMetrics(metrics);
+        DisplayMetrics metrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(metrics);
         int usableHeight = metrics.heightPixels;
         int usableWidth = metrics.widthPixels;
