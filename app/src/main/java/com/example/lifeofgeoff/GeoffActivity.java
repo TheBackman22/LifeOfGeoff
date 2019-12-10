@@ -346,8 +346,6 @@ public class GeoffActivity extends AppCompatActivity {
         @Override
         public void onMissing(FaceDetector.Detections<Face> detectionResults) {
             mOverlay.remove(mFaceGraphic);
-            geoffCount--;
-            geoffCountText.setText(getApplicationContext().getString(R.string.geoff_count, geoffCount));
         }
 
         /**
