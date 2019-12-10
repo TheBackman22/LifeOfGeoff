@@ -14,6 +14,12 @@ public class FaceData {
     private float eulerY;
     private float eulerZ;
 
+    private PointF mLeftEyePosition;
+    private PointF mRightEyePosition;
+    private PointF mLeftCheekPosition;
+    private PointF mRightCheekPosition;
+    private PointF mNoseBasePosition;
+
     public int getId() {
         return id;
     }
@@ -60,5 +66,21 @@ public class FaceData {
 
     public void setEulerZ(float newEulerZ) {
         eulerZ = newEulerZ;
+    }
+
+    public PointF getLeftEyePosition() {
+        return mLeftEyePosition;
+    }
+
+    public void setLeftEyePosition(PointF leftEyePosition) {
+        this.mLeftEyePosition = leftEyePosition;
+    }
+
+    public PointF getRightEyePosition() {
+        return mRightEyePosition;
+    }
+
+    public void setRightEyePosition(PointF rightEyePosition) {
+        this.mRightEyePosition = rightEyePosition;
     }
 }

@@ -15,6 +15,8 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.Size;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.lifeofgeoff.ui.camera.CameraSourcePreview;
 import com.example.lifeofgeoff.ui.camera.GraphicOverlay;
@@ -42,6 +44,9 @@ public class GeoffActivity extends AppCompatActivity {
     private static final int RC_HANDLE_GMS = 9001;
     // permission request codes need to be < 256
     private static final int RC_HANDLE_CAMERA_PERM = 2;
+    private int geoffCount;
+    private TextView geoffCountText;
+    private boolean mIsFrontFacing;
 
     //==============================================================================================
     // Activity Methods
@@ -66,6 +71,36 @@ public class GeoffActivity extends AppCompatActivity {
         } else {
             requestCameraPermission();
         }
+        geoffCount = 0;
+        //geoffCountText.setText("NUMBER OF GEOFFS: " + geoffCount);
+        View.OnClickListener take = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("Took a pic");
+                mCameraSource.takePicture(null, null);
+            }
+        };
+        Button b = findViewById(R.id.picButton);
+        b.setOnClickListener(take);
+        View.OnClickListener flip = new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("Took a pic");
+                mIsFrontFacing = !mIsFrontFacing;
+
+                if (mCameraSource != null) {
+                    mCameraSource.release();
+                    mCameraSource = null;
+                }
+                createCameraSource();
+                startCameraSource();
+            }
+        };
+        Button flipButton = findViewById(R.id.flipButton);
+        flipButton.setOnClickListener(flip);
+
+
+
     }
     /**
      * Handles the requesting of the camera permission.  This includes
@@ -131,9 +166,14 @@ public class GeoffActivity extends AppCompatActivity {
         int usableHeight = metrics.heightPixels;
         int usableWidth = metrics.widthPixels;
 
+        int facing = CameraSource.CAMERA_FACING_FRONT;
+        if (!mIsFrontFacing) {
+            facing = CameraSource.CAMERA_FACING_BACK;
+        }
+
         mCameraSource = new CameraSource.Builder(context, detector)
                 .setRequestedPreviewSize(1960, 1080)
-                .setFacing(CameraSource.CAMERA_FACING_BACK)
+                .setFacing(facing)
                 .setRequestedFps(60.0f)
                 .setAutoFocusEnabled(true)
                 .build();
@@ -282,6 +322,8 @@ public class GeoffActivity extends AppCompatActivity {
         @Override
         public void onNewItem(int faceId, Face item) {
             mFaceGraphic.setId(faceId);
+            //geoffCount++;
+            //geoffCountText.setText("NUMBER OF GEOFFS: " + geoffCount);
         }
 
         /**
@@ -291,6 +333,8 @@ public class GeoffActivity extends AppCompatActivity {
         public void onUpdate(FaceDetector.Detections<Face> detectionResults, Face face) {
             mOverlay.add(mFaceGraphic);
             mFaceGraphic.updateFace(face);
+            //rotates the picture
+            //mOverlay.setRotation((int) face.getEulerZ());
         }
 
         /**
@@ -301,6 +345,8 @@ public class GeoffActivity extends AppCompatActivity {
         @Override
         public void onMissing(FaceDetector.Detections<Face> detectionResults) {
             mOverlay.remove(mFaceGraphic);
+            //geoffCount--;
+            //geoffCountText.setText("NUMBER OF GEOFFS: " + geoffCount);
         }
 
         /**
@@ -310,6 +356,8 @@ public class GeoffActivity extends AppCompatActivity {
         @Override
         public void onDone() {
             mOverlay.remove(mFaceGraphic);
+            //geoffCount--;
+            //geoffCountText.setText("NUMBER OF GEOFFS: " + geoffCount);
         }
     }
 }
