@@ -6,6 +6,9 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.drawable.Drawable;
+import android.graphics.drawable.RotateDrawable;
+import android.util.AttributeSet;
+import android.widget.ImageView;
 
 import androidx.core.content.res.ResourcesCompat;
 
@@ -78,21 +81,21 @@ class DrawPicture extends GraphicOverlay.Graphic {
 //                translateY(face.getPosition().y));
 //        float width = scaleX(face.getWidth());
 //        float height = scaleY(face.getHeight());
-
-
+        ///IF WANT TO ROTATE FIGURE OUT THIS vvv
+//        RotateDrawable g = (RotateDrawable) geoff;
+//        g.setToDegrees(face.getEulerZ());
         // Draws a circle at the position of the detected face, with the face's track id below.
         float x = translateX(face.getPosition().x + face.getWidth() / 2);
         float y = translateY(face.getPosition().y + face.getHeight() / 2);
 
         // Draws a Geoff.
-        float xOffset = scaleX(face.getWidth() / 1.9f);
-        float yOffset = scaleY(face.getHeight() / 1.9f);
+        float xOffset = scaleX(face.getWidth() / 1.6f);
+        float yOffset = scaleY(face.getHeight() / 1.6f);
         float left = x - xOffset;
         float top = y - yOffset;
         float right = x + xOffset;
         float bottom = y + yOffset;
         geoff.setBounds((int) left, (int) top, (int) right, (int) bottom);
-        System.out.println("Dimensions: " + geoff.getBounds().toString());
         geoff.draw(canvas);
 
     }

@@ -327,7 +327,7 @@ public class GeoffActivity extends AppCompatActivity {
             if (geoffCount <= 0) {
                 geoffCountText.setText("No Geoffs Here");
             } else {
-                geoffCountText.setText(getApplicationContext().getString(R.string.geoff_count, geoffCount - 1));
+                geoffCountText.setText(getApplicationContext().getString(R.string.geoff_count, geoffCount));
             }
         }
 
@@ -363,7 +363,7 @@ public class GeoffActivity extends AppCompatActivity {
             if (geoffCount <= 0) {
                 geoffCountText.setText("No Geoffs Here");
             } else {
-                geoffCountText.setText(getApplicationContext().getString(R.string.geoff_count, geoffCount - 1));
+                geoffCountText.setText(getApplicationContext().getString(R.string.geoff_count, geoffCount));
             }
         }
     }
