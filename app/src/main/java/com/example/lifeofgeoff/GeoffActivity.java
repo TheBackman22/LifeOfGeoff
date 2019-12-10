@@ -73,7 +73,7 @@ public class GeoffActivity extends AppCompatActivity {
         }
         geoffCountText = findViewById(R.id.geoffCount);
         geoffCount = 0;
-        geoffCountText.setText(getApplicationContext().getString(R.string.geoff_count, geoffCount));
+        geoffCountText.setText("No Geoffs Here");
         View.OnClickListener take = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -324,7 +324,11 @@ public class GeoffActivity extends AppCompatActivity {
         public void onNewItem(int faceId, Face item) {
             mFaceGraphic.setId(faceId);
             geoffCount++;
-            geoffCountText.setText(getApplicationContext().getString(R.string.geoff_count, geoffCount));
+            if (geoffCount <= 0) {
+                geoffCountText.setText("No Geoffs Here");
+            } else {
+                geoffCountText.setText(getApplicationContext().getString(R.string.geoff_count, geoffCount - 1));
+            }
         }
 
         /**
@@ -356,7 +360,11 @@ public class GeoffActivity extends AppCompatActivity {
         public void onDone() {
             mOverlay.remove(mFaceGraphic);
             geoffCount--;
-            geoffCountText.setText(getApplicationContext().getString(R.string.geoff_count, geoffCount));
+            if (geoffCount <= 0) {
+                geoffCountText.setText("No Geoffs Here");
+            } else {
+                geoffCountText.setText(getApplicationContext().getString(R.string.geoff_count, geoffCount - 1));
+            }
         }
     }
 }
