@@ -71,8 +71,9 @@ public class GeoffActivity extends AppCompatActivity {
         } else {
             requestCameraPermission();
         }
+        geoffCountText = findViewById(R.id.geoffCount);
         geoffCount = 0;
-        //geoffCountText.setText("NUMBER OF GEOFFS: " + geoffCount);
+        geoffCountText.setText(getApplicationContext().getString(R.string.geoff_count, geoffCount));
         View.OnClickListener take = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -322,8 +323,8 @@ public class GeoffActivity extends AppCompatActivity {
         @Override
         public void onNewItem(int faceId, Face item) {
             mFaceGraphic.setId(faceId);
-            //geoffCount++;
-            //geoffCountText.setText("NUMBER OF GEOFFS: " + geoffCount);
+            geoffCount++;
+            geoffCountText.setText(getApplicationContext().getString(R.string.geoff_count, geoffCount));
         }
 
         /**
@@ -345,8 +346,8 @@ public class GeoffActivity extends AppCompatActivity {
         @Override
         public void onMissing(FaceDetector.Detections<Face> detectionResults) {
             mOverlay.remove(mFaceGraphic);
-            //geoffCount--;
-            //geoffCountText.setText("NUMBER OF GEOFFS: " + geoffCount);
+            geoffCount--;
+            geoffCountText.setText(getApplicationContext().getString(R.string.geoff_count, geoffCount));
         }
 
         /**
@@ -356,8 +357,8 @@ public class GeoffActivity extends AppCompatActivity {
         @Override
         public void onDone() {
             mOverlay.remove(mFaceGraphic);
-            //geoffCount--;
-            //geoffCountText.setText("NUMBER OF GEOFFS: " + geoffCount);
+            geoffCount--;
+            geoffCountText.setText(getApplicationContext().getString(R.string.geoff_count, geoffCount));
         }
     }
 }
